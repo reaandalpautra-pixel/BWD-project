@@ -22,7 +22,7 @@ body{
     color:white;
 }
 
-/* 1. ENTRY OVERLAY (વેબસાઇટ નો પદો) */
+/* 1. ENTRY OVERLAY */
 #entryOverlay {
     position: fixed;
     top: 0;
@@ -296,6 +296,10 @@ section{
     color:white;
     text-decoration:none;
     transition:.3s;
+    border:none;
+    cursor:pointer;
+    width: 100%;
+    font-weight: bold;
 }
 
 .buy:hover{
@@ -343,7 +347,7 @@ th{
     background:#00aee8;
 }
 
-/* 360 DEGREE MODAL */
+/* MODAL GENERAL STYLES */
 .modal {
     display: none;
     position: fixed;
@@ -367,6 +371,8 @@ th{
     max-width: 850px;
     position: relative;
     box-shadow: 0 0 50px rgba(0,200,255,0.3);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .close-btn {
@@ -386,7 +392,7 @@ th{
     display: flex;
     gap: 30px;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .modal-view-360 {
@@ -424,10 +430,101 @@ th{
     margin-bottom: 10px;
 }
 
-.modal-details p {
-    color: #bbb;
+/* CHECKOUT PAGE STYLES */
+.checkout-modal {
+    max-width: 650px;
+}
+
+.form-group {
     margin-bottom: 15px;
-    line-height: 1.6;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #00c8ff;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: #171b24;
+    border: 1px solid #303642;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: #00c8ff;
+}
+
+.pay-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.pay-tab-btn {
+    flex: 1;
+    padding: 10px;
+    background: #171b24;
+    border: 1px solid #303642;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.pay-tab-btn.active {
+    background: #00aee8;
+    border-color: #00c8ff;
+}
+
+.pay-tab-content {
+    display: none;
+    background: #171b24;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.qr-box {
+    text-align: center;
+    padding: 10px;
+}
+
+.qr-box img {
+    width: 140px;
+    height: 140px;
+    background: white;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.order-summary {
+    background: #171b24;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: #00c8ff;
+}
+
+/* SUCCESS MODAL STYLES */
+.success-box {
+    text-align: center;
+    padding: 20px;
+}
+
+.success-icon {
+    font-size: 60px;
+    margin-bottom: 10px;
 }
 
 /* STORE */
@@ -498,7 +595,7 @@ footer span{
 
 <body>
 
-<!-- 1. ENTRY OVERLAY (વેબસાઇટ નો પદો) -->
+<!-- ENTRY OVERLAY -->
 <div id="entryOverlay">
     <div class="overlay-content">
         <h1>Welcome to Tech<span>Zone</span> 💻</h1>
@@ -514,9 +611,9 @@ footer span{
     </div>
     <ul>
         <li><a href="#home">Home</a></li>
-        <li><a href="#laptops">Laptops</a></li>
-        <li><a href="#suggestions">Suggested</a></li>
-        <li><a href="#compare">Compare</a></li>
+        <li><a href="#laptops">Laptop Section</a></li>
+        <li><a href="#suggestions">Suggested Laptop</a></li>
+        <li><a href="#compare">Compare Laptop</a></li>
         <li><a href="#store">Store</a></li>
     </ul>
 </nav>
@@ -526,14 +623,12 @@ footer span{
     <div class="hero-text">
         <h1>Find Your <span>Perfect Laptop</span></h1>
         <p>
-            Explore our latest laptops from popular brands.
-            Rotate in 360°, compare specifications, check prices and visit our
-            local store to purchase your favourite laptop.
+            Explore our latest laptops from popular brands like HP, Dell, Lenovo, Acer, ASUS, and Apple.
+            Rotate in 360°, compare specifications, check prices, and order your laptop online.
         </p>
-        <a href="#laptops" class="btn">Explore Laptops 💻</a>
+        <a href="#laptops" class="btn">Explore Laptop 💻</a>
     </div>
 
-    <!-- Animated Laptop -->
     <div class="laptop">
         <div class="screen">
             <div class="screen-content">
@@ -546,23 +641,19 @@ footer span{
 
 <!-- MAIN LAPTOP SECTION -->
 <section id="laptops">
-    <h2 class="title">Our <span>Featured Laptops</span></h2>
+    <h2 class="title">Featured <span>Laptop Collection</span></h2>
 
     <div class="search">
-        <input type="text" id="search" placeholder="🔍 Search laptop..." onkeyup="searchLaptop()">
+        <input type="text" id="search" placeholder="🔍 Search laptop model or brand..." onkeyup="searchLaptop()">
     </div>
 
-    <div class="products" id="featuredProducts">
-        <!-- Dynmaically loaded via Javascript -->
-    </div>
+    <div class="products" id="featuredProducts"></div>
 </section>
 
-<!-- SCROLL DOWN SUGGESTIONS SECTION -->
+<!-- SUGGESTIONS SECTION -->
 <section id="suggestions" style="background:#0b0f19;">
-    <h2 class="title">Suggested <span>For You</span></h2>
-    <div class="products" id="suggestedProducts">
-        <!-- Dynmaically loaded via Javascript -->
-    </div>
+    <h2 class="title">Suggested <span>Laptop Selection</span></h2>
+    <div class="products" id="suggestedProducts"></div>
 </section>
 
 <!-- COMPARISON SECTION -->
@@ -621,161 +712,184 @@ footer span{
 
 <!-- STORE -->
 <section class="store" id="store">
-    <h2 class="title">Visit Our <span>Store</span></h2>
+    <h2 class="title">Visit Our <span>Laptop Store</span></h2>
     <div class="store-content">
         <p>
             TechZone is a local laptop store where customers can physically visit, check laptops in 360 views and purchase the product according to their requirements.
         </p>
         <div class="contact-box">
-            <div class="contact">📍 Main Market, Gujarat</div>
-            <div class="contact">📞 +91 98765 43210</div>
+            <div class="contact">📍 Astron Chowk, Main Market, Rajkot, Gujarat</div>
+            <div class="contact">📞 +91 98765 *****</div>
+            <div class="contact">📞 +91 98665 *****</div>
             <div class="contact">✉️ techzone@gmail.com</div>
         </div>
     </div>
 </section>
 
-<!-- 360 DEGREE & DETAILS MODAL (POPUP) -->
+<!-- 1. PRODUCT DETAILS & 360 MODAL -->
 <div id="productModal" class="modal">
     <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
         <div class="modal-body">
             <div class="modal-view-360">
-                <h3 style="margin-bottom:10px; color:#00c8ff;">360° Interactive View</h3>
-                <img id="view360Img" src="" alt="360 View">
+                <h3 style="margin-bottom:10px; color:#00c8ff;">Laptop 360° Interactive View</h3>
+                <img id="view360Img" src="" alt="Laptop 360 View">
                 <div class="slider-container">
                     <input type="range" id="degreeSlider" min="0" max="3" value="0" oninput="change360Angle(this.value)">
-                    <p style="color:#aaa; font-size:12px; margin-top:5px;">Slide to view 360° angle 🔄</p>
+                    <p style="color:#aaa; font-size:12px; margin-top:5px;">Slide to view laptop angle 🔄</p>
                 </div>
             </div>
             <div class="modal-details">
-                <h2 id="modalTitle">Laptop Name</h2>
+                <h2 id="modalTitle">Laptop Model</h2>
                 <div class="price" id="modalPrice">₹0</div>
-                <div class="specs" id="modalSpecs" style="font-size:16px; margin-bottom:20px;">
-                    <!-- Specs will be injected dynamically -->
-                </div>
-                <a href="#store" class="buy" onclick="closeModal()">Visit Store to Buy</a>
+                <div class="specs" id="modalSpecs" style="font-size:15px; margin-bottom:20px;"></div>
+                <button class="buy" onclick="openCheckoutModal()">Buy This Laptop 💳</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- FOOTER -->
+<!-- 2. FULL PAYMENT & CHECKOUT PAGE MODAL -->
+<div id="checkoutModal" class="modal">
+    <div class="modal-content checkout-modal">
+        <span class="close-btn" onclick="closeModal('checkoutModal')">&times;</span>
+        <h2 style="color:#00c8ff; margin-bottom:15px; text-align:center;">Laptop Order & Payment</h2>
+        
+        <div class="order-summary">
+            <span id="checkoutLaptopName">Laptop Name</span>
+            <span id="checkoutLaptopPrice">₹0</span>
+        </div>
+
+        <form id="checkoutForm" onsubmit="handleOrderSubmission(event)">
+            <!-- CUSTOMER DETAILS -->
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="custName" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="number" id="custPhone" placeholder="Enter 10-digit mobile number" required pattern="[0-9]{10}">
+            </div>
+            <div class="form-group">
+                <label>Delivery Address</label>
+                <textarea id="custAddress" rows="2" placeholder="Enter full address with pincode" required></textarea>
+            </div>
+
+            <!-- PAYMENT OPTIONS TABS -->
+            <label style="color:#00c8ff; font-size:14px; display:block; margin-bottom:8px;">Select Payment Method</label>
+            <div class="pay-tabs">
+                <button type="button" class="pay-tab-btn active" onclick="switchPayTab('cod', this)">Cash on Delivery (COD)</button>
+                <button type="button" class="pay-tab-btn" onclick="switchPayTab('upi', this)">UPI (GPay/PhonePe)</button>
+                <button type="button" class="pay-tab-btn" onclick="switchPayTab('card', this)">Debit/Credit Card</button>
+            </div>
+
+            <!-- TAB 1: COD CONTENT -->
+            <div id="payCod" class="pay-tab-content" style="display:block;">
+                <p style="color:#ccc; font-size:13px;">Pay with cash when your laptop is delivered to your doorstep.</p>
+            </div>
+
+            <!-- TAB 2: UPI CONTENT -->
+            <div id="payUpi" class="pay-tab-content">
+                <div class="qr-box">
+                    <p style="font-size:12px; color:#aaa; margin-bottom:8px;">Scan QR Code to pay via Google Pay / PhonePe / Paytm</p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=techzone@upi" alt="UPI QR Code">
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <label>Or enter UPI ID</label>
+                    <input type="text" placeholder="e.g. username@upi">
+                </div>
+            </div>
+
+            <!-- TAB 3: CARD CONTENT -->
+            <div id="payCard" class="pay-tab-content">
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="1234 5678 9101 1121" maxlength="16">
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <div class="form-group" style="flex:1;">
+                        <label>Expiry Date</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>CVV</label>
+                        <input type="password" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="buy" style="margin-top:10px;">Confirm Laptop Order 🚀</button>
+        </form>
+    </div>
+</div>
+
+<!-- 3. ORDER SUCCESS PAGE MODAL -->
+<div id="successModal" class="modal">
+    <div class="modal-content checkout-modal">
+        <div class="success-box">
+            <div class="success-icon">🎉</div>
+            <h2 style="color:#00c8ff; margin-bottom:10px;">Laptop Order Placed Successfully!</h2>
+            <p style="color:#bbb; font-size:14px; line-height:1.6;" id="successMsg">
+                Thank you for shopping with TechZone. Your laptop order details have been sent to your registered mobile number.
+            </p>
+            <div style="margin:20px 0; background:#171b24; padding:12px; border-radius:8px; text-align:left; font-size:13px;">
+                <p><strong>Order ID:</strong> <span id="successOrderId" style="color:#00c8ff;">TZ10928</span></p>
+                <p><strong>Laptop Ordered:</strong> <span id="successItemName">Laptop Model</span></p>
+                <p><strong>Payment Mode:</strong> <span id="successPayMode">COD</span></p>
+            </div>
+            <button class="buy" onclick="closeModal('successModal')">Continue Laptop Shopping 🛍️</button>
+        </div>
+    </div>
+</div>
+
+
 <footer>
-    © 2026 <span>TechZone</span> | Offline Laptop Selling Website
+    © 2026 <span>TechZone</span> | Laptop Store Online & Offline
 </footer>
 
 <script>
-// LAPTOP DATA OBJECTS (વિસ્તૃત યાદી ઉમેરેલી છે)
+
 const laptops = [
-    // --- APPLE LAPTOPS ---
     {
         id: 1,
-        name: "Apple MacBook Air M2",
-        price: "₹89,999",
-        cpu: "Apple M2 Chip",
-        ram: "8GB Unified RAM",
-        storage: "256GB SSD",
-        display: "13.6-inch Liquid Retina",
+        name: "HP Pavilion 15",
+        price: "₹62,990",
+        cpu: "Intel Core i5 13th Gen",
+        ram: "16GB DDR4 RAM",
+        storage: "512GB NVMe SSD",
+        display: "15.6-inch FHD IPS Display",
         type: "featured",
         images: [
-            "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600",
-            "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600",
-            "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600",
-            "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600"
+            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
+            "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600",
+            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
+            "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600"
         ]
     },
     {
         id: 2,
-        name: "Apple MacBook Pro 14",
-        price: "₹1,69,900",
-        cpu: "Apple M3 Pro Chip",
-        ram: "18GB Unified RAM",
-        storage: "512GB SSD",
-        display: "14.2-inch Liquid Retina XDR",
+        name: "Dell XPS 13",
+        price: "₹1,24,990",
+        cpu: "Intel Core i7 13th Gen",
+        ram: "16GB LPDDR5 RAM",
+        storage: "512GB NVMe SSD",
+        display: "13.4-inch FHD+ InfinityEdge",
         type: "featured",
         images: [
-            "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600",
-            "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600",
-            "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600",
-            "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600"
+            "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600",
+            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
+            "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600",
+            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600"
         ]
     },
     {
         id: 3,
-        name: "Apple MacBook Air M3",
-        price: "₹1,14,900",
-        cpu: "Apple M3 Chip",
-        ram: "16GB Unified RAM",
-        storage: "512GB SSD",
-        display: "15.3-inch Liquid Retina",
-        type: "suggested",
-        images: [
-            "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600",
-            "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600",
-            "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600",
-            "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600"
-        ]
-    },
-
-    // --- SAMSUNG LAPTOPS ---
-    {
-        id: 4,
-        name: "Samsung Galaxy Book4",
-        price: "₹74,999",
-        cpu: "Intel Core i7 13th Gen",
-        ram: "16GB LPDDR5 RAM",
-        storage: "512GB NVMe SSD",
-        display: "15.6-inch FHD Display",
-        type: "suggested",
-        images: [
-            "https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=600",
-            "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600",
-            "https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=600",
-            "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600"
-        ]
-    },
-    {
-        id: 5,
-        name: "Samsung Galaxy Book3 Pro 360",
-        price: "₹1,39,990",
-        cpu: "Intel Core i7 Evo",
-        ram: "16GB LPDDR5 RAM",
-        storage: "1TB SSD",
-        display: "16-inch Dynamic AMOLED 2X Touch",
-        type: "featured",
-        images: [
-            "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600",
-            "https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=600",
-            "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600",
-            "https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=600"
-        ]
-    },
-    {
-        id: 6,
-        name: "Samsung Galaxy Book Go",
-        price: "₹38,990",
-        cpu: "Snapdragon 7c Gen 2",
-        ram: "4GB RAM",
-        storage: "128GB eMMC",
-        display: "14-inch FHD LED Display",
-        type: "suggested",
-        images: [
-            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
-            "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600",
-            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
-            "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600"
-        ]
-    },
-
-    // --- ASUS LAPTOPS ---
-    {
-        id: 7,
-        name: "ASUS VivoBook 15",
-        price: "₹59,999",
-        cpu: "Intel Core i5 12th Gen",
-        ram: "16GB DDR4 RAM",
-        storage: "512GB NVMe SSD",
-        display: "15.6-inch FHD Display",
+        name: "Lenovo Legion 5 Gaming",
+        price: "₹94,990",
+        cpu: "AMD Ryzen 7 7735HS",
+        ram: "16GB DDR5 RAM",
+        storage: "1TB SSD + RTX 4050 6GB",
+        display: "15.6-inch WQHD 165Hz",
         type: "featured",
         images: [
             "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600",
@@ -785,101 +899,252 @@ const laptops = [
         ]
     },
     {
-        id: 8,
-        name: "ASUS ROG Strix G16",
-        price: "₹1,24,990",
-        cpu: "Intel Core i7 13th Gen",
+        id: 4,
+        name: "ASUS ROG Zephyrus G14",
+        price: "₹1,44,990",
+        cpu: "AMD Ryzen 9 7940HS",
         ram: "16GB DDR5 RAM",
-        storage: "1TB Gen4 SSD",
-        display: "16-inch FHD+ 165Hz Gaming",
-        type: "featured",
-        images: [
-            "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600",
-            "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600",
-            "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600",
-            "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600"
-        ]
-    },
-
-    // --- HP LAPTOPS ---
-    {
-        id: 9,
-        name: "HP Pavilion 15",
-        price: "₹69,999",
-        cpu: "Intel Core i7 12th Gen",
-        ram: "16GB RAM",
-        storage: "512GB SSD",
-        display: "15.6-inch Micro-Edge Display",
-        type: "featured",
-        images: [
-            "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600",
-            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
-            "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600",
-            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600"
-        ]
-    },
-    {
-        id: 10,
-        name: "HP Victus Gaming",
-        price: "₹62,490",
-        cpu: "AMD Ryzen 5 5600H",
-        ram: "16GB RAM",
-        storage: "512GB SSD",
-        display: "15.6-inch 144Hz Display",
+        storage: "1TB SSD + RTX 4060 8GB",
+        display: "14-inch QHD+ 165Hz ROG Nebula",
         type: "suggested",
         images: [
-            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
-            "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600",
-            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
-            "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600"
+            "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600",
+            "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600",
+            "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600",
+            "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600"
         ]
     },
-
-    // --- LENOVO LAPTOPS ---
     {
-        id: 11,
-        name: "Lenovo IdeaPad Slim 3",
-        price: "₹54,999",
-        cpu: "Intel Core i5 12th Gen",
-        ram: "16GB RAM",
-        storage: "512GB SSD",
-        display: "15.6-inch FHD Display",
+        id: 5,
+        name: "Acer Predator Helios Neo 16",
+        price: "₹1,09,990",
+        cpu: "Intel Core i7 13700HX",
+        ram: "16GB DDR5 RAM",
+        storage: "1TB SSD + RTX 4060 8GB",
+        display: "16-inch WQXGA 165Hz",
         type: "suggested",
         images: [
-            "https://images.unsplash.com/photo-1593642532744-d377ab507dc8?w=600",
             "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600",
-            "https://images.unsplash.com/photo-1593642532744-d377ab507dc8?w=600",
-            "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600"
+            "https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=600",
+            "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600",
+            "https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=600"
         ]
     },
+    
+            // LAPTOP DATA OBJECTS (વિસ્તૃત યાદી ઉમેરેલી છે)
+            // --- APPLE LAPTOPS ---
+            {
+                id: 7,
+                name: "Apple MacBook Air M2",
+                price: "₹89,999",
+                cpu: "Apple M2 Chip",
+                ram: "8GB Unified RAM",
+                storage: "256GB SSD",
+                display: "13.6-inch Liquid Retina",
+                type: "featured",
+                images: [
+                    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600",
+                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600",
+                    "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600",
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600"
+                ]
+            },
+            {
+                id: 8,
+                name: "Apple MacBook Pro 14",
+                price: "₹1,69,900",
+                cpu: "Apple M3 Pro Chip",
+                ram: "18GB Unified RAM",
+                storage: "512GB SSD",
+                display: "14.2-inch Liquid Retina XDR",
+                type: "featured",
+                images: [
+                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600",
+                    "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600",
+                    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600",
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600"
+                ]
+            },
+            {
+                id: 9,
+                name: "Apple MacBook Air M3",
+                price: "₹1,14,900",
+                cpu: "Apple M3 Chip",
+                ram: "16GB Unified RAM",
+                storage: "512GB SSD",
+                display: "15.3-inch Liquid Retina",
+                type: "suggested",
+                images: [
+                    "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600",
+                    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600",
+                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600",
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600"
+                ]
+            },
 
-    // --- DELL LAPTOPS ---
-    {
-        id: 12,
-        name: "Dell Inspiron 3520",
-        price: "₹52,999",
-        cpu: "Intel Core i5 12th Gen",
-        ram: "8GB DDR4 RAM",
-        storage: "512GB SSD",
-        display: "15.6-inch 120Hz Display",
-        type: "suggested",
-        images: [
-            "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600",
-            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
-            "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600",
-            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600"
-        ]
-    }
+            // --- SAMSUNG LAPTOPS ---
+            {
+                id: 10,
+                name: "Samsung Galaxy Book4",
+                price: "₹74,999",
+                cpu: "Intel Core i7 13th Gen",
+                ram: "16GB LPDDR5 RAM",
+                storage: "512GB NVMe SSD",
+                display: "15.6-inch FHD Display",
+                type: "suggested",
+                images: [
+                    "https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=600",
+                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600",
+                    "https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=600",
+                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600"
+                ]
+            },
+            {
+                id: 11,
+                name: "Samsung Galaxy Book3 Pro 360",
+                price: "₹1,39,990",
+                cpu: "Intel Core i7 Evo",
+                ram: "16GB LPDDR5 RAM",
+                storage: "1TB SSD",
+                display: "16-inch Dynamic AMOLED 2X Touch",
+                type: "featured",
+                images: [
+                    "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600",
+                    "https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=600",
+                    "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600",
+                    "https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=600"
+                ]
+            },
+            {
+                id: 12,
+                name: "Samsung Galaxy Book Go",
+                price: "₹38,990",
+                cpu: "Snapdragon 7c Gen 2",
+                ram: "4GB RAM",
+                storage: "128GB eMMC",
+                display: "14-inch FHD LED Display",
+                type: "suggested",
+                images: [
+                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600",
+                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600"
+                ]
+            },
+
+            // --- ASUS LAPTOPS ---
+            {
+                id: 13,
+                name: "ASUS VivoBook 15",
+                price: "₹59,999",
+                cpu: "Intel Core i5 12th Gen",
+                ram: "16GB DDR4 RAM",
+                storage: "512GB NVMe SSD",
+                display: "15.6-inch FHD Display",
+                type: "featured",
+                images: [
+                    "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600",
+                    "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600",
+                    "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600",
+                    "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600"
+                ]
+            },
+            {
+                id: 14,
+                name: "ASUS ROG Strix G16",
+                price: "₹1,24,990",
+                cpu: "Intel Core i7 13th Gen",
+                ram: "16GB DDR5 RAM",
+                storage: "1TB Gen4 SSD",
+                display: "16-inch FHD+ 165Hz Gaming",
+                type: "featured",
+                images: [
+                    "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600",
+                    "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600",
+                    "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600",
+                    "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600"
+                ]
+            },
+
+            // --- HP LAPTOPS ---
+            {
+                id: 15,
+                name: "HP Pavilion 15",
+                price: "₹69,999",
+                cpu: "Intel Core i7 12th Gen",
+                ram: "16GB RAM",
+                storage: "512GB SSD",
+                display: "15.6-inch Micro-Edge Display",
+                type: "featured",
+                images: [
+                    "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600",
+                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
+                    "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600",
+                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600"
+                ]
+            },
+            {
+                id: 16,
+                name: "HP Victus Gaming",
+                price: "₹62,490",
+                cpu: "AMD Ryzen 5 5600H",
+                ram: "16GB RAM",
+                storage: "512GB SSD",
+                display: "15.6-inch 144Hz Display",
+                type: "suggested",
+                images: [
+                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
+                    "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600",
+                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
+                    "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600"
+                ]
+            },
+
+            // --- LENOVO LAPTOPS ---
+            {
+                id: 17,
+                name: "Lenovo IdeaPad Slim 3",
+                price: "₹54,999",
+                cpu: "Intel Core i5 12th Gen",
+                ram: "16GB RAM",
+                storage: "512GB SSD",
+                display: "15.6-inch FHD Display",
+                type: "suggested",
+                images: [
+                    "https://images.unsplash.com/photo-1593642532744-d377ab507dc8?w=600",
+                    "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600",
+                    "https://images.unsplash.com/photo-1593642532744-d377ab507dc8?w=600",
+                    "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600"
+                ]
+            },
+
+            // --- DELL LAPTOPS ---
+            {
+                id: 128,
+                name: "Dell Inspiron 3520",
+                price: "₹52,999",
+                cpu: "Intel Core i5 12th Gen",
+                ram: "8GB DDR4 RAM",
+                storage: "512GB SSD",
+                display: "15.6-inch 120Hz Display",
+                type: "suggested",
+                images: [
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600",
+                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600",
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600",
+                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600"
+                ]
+            }
 ];
 
-let activeLaptop = null;
 
-// Close Entry Overlay (પદો હટાવવો)
+let activeLaptop = null;
+let currentPayMethod = 'Cash on Delivery (COD)';
+
 function closeOverlay() {
     document.getElementById('entryOverlay').style.transform = 'translateY(-100%)';
 }
 
-// Render Products Dynamic
 function loadProducts() {
     const featuredContainer = document.getElementById('featuredProducts');
     const suggestedContainer = document.getElementById('suggestedProducts');
@@ -900,7 +1165,7 @@ function loadProducts() {
                         ${laptop.display}
                     </div>
                     <div class="price">${laptop.price}</div>
-                    <a href="javascript:void(0)" class="buy">View Details & 360°</a>
+                    <button class="buy">View Details & Buy Laptop</button>
                 </div>
             </div>
         `;
@@ -915,7 +1180,6 @@ function loadProducts() {
     populateDropdowns();
 }
 
-// Open Modal Popup with 360 View
 function openModal(id) {
     activeLaptop = laptops.find(l => l.id === id);
 
@@ -933,8 +1197,8 @@ function openModal(id) {
     document.getElementById('productModal').style.display = 'flex';
 }
 
-function closeModal() {
-    document.getElementById('productModal').style.display = 'none';
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
 }
 
 function change360Angle(val) {
@@ -943,7 +1207,50 @@ function change360Angle(val) {
     }
 }
 
-// Search functionality
+
+function openCheckoutModal() {
+    closeModal('productModal');
+    document.getElementById('checkoutLaptopName').innerText = activeLaptop.name;
+    document.getElementById('checkoutLaptopPrice').innerText = activeLaptop.price;
+    document.getElementById('checkoutModal').style.display = 'flex';
+}
+
+
+function switchPayTab(type, btn) {
+    document.querySelectorAll('.pay-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.pay-tab-content').forEach(c => c.style.display = 'none');
+
+    btn.classList.add('active');
+
+    if (type === 'cod') {
+        document.getElementById('payCod').style.display = 'block';
+        currentPayMethod = 'Cash on Delivery (COD)';
+    } else if (type === 'upi') {
+        document.getElementById('payUpi').style.display = 'block';
+        currentPayMethod = 'UPI Payment';
+    } else if (type === 'card') {
+        document.getElementById('payCard').style.display = 'block';
+        currentPayMethod = 'Credit/Debit Card';
+    }
+}
+
+/* ORDER SUBMISSION */
+function handleOrderSubmission(e) {
+    e.preventDefault();
+    closeModal('checkoutModal');
+
+    // Generate Random Order ID
+    const randomOrderId = 'TZ' + Math.floor(10000 + Math.random() * 90000);
+
+    document.getElementById('successOrderId').innerText = randomOrderId;
+    document.getElementById('successItemName').innerText = activeLaptop.name;
+    document.getElementById('successPayMode').innerText = currentPayMethod;
+
+    document.getElementById('successModal').style.display = 'flex';
+    document.getElementById('checkoutForm').reset();
+}
+
+/* SEARCH LAPTOPS */
 function searchLaptop(){
     let input = document.getElementById("search").value.toLowerCase();
     let cards = document.querySelectorAll(".card");
@@ -958,7 +1265,6 @@ function searchLaptop(){
     });
 }
 
-// Populate dropdown options for comparison
 function populateDropdowns() {
     const s1 = document.getElementById('lapSelect1');
     const s2 = document.getElementById('lapSelect2');
@@ -972,7 +1278,6 @@ function populateDropdowns() {
     });
 }
 
-// Update Comparison Table
 function updateComparison() {
     const id1 = document.getElementById('lapSelect1').value;
     const id2 = document.getElementById('lapSelect2').value;
@@ -995,7 +1300,6 @@ function updateComparison() {
     document.getElementById('compDisplay2').innerText = lap2 ? lap2.display : "-";
 }
 
-// Initialize on Load
 window.onload = loadProducts;
 </script>
 
